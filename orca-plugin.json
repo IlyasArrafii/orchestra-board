@@ -1,0 +1,110 @@
+{
+  "manifestVersion": 2,
+  "id": "orchestra-board",
+  "name": "Orchestra Board",
+  "version": "0.4.0",
+  "description": "A Linear-style board for Orca agent teams: Backlog, In Progress, Under Review and Done, a flow canvas, agents started straight from the board, Jev (TypeSafe) picks for assignee and reviewer, and team and prompt settings.",
+  "engines": {
+    "orca": ">=1.4.248"
+  },
+  "execution": "trusted-worker",
+  "pluginApi": 1,
+  "main": "src/worker.ts",
+  "contributes": {
+    "customEditors": [
+      {
+        "id": "orchestra-board",
+        "title": "Orchestra Board",
+        "extensions": [
+          ".orchestraboard"
+        ],
+        "entry": "editor/index.html",
+        "frame": "isolated"
+      }
+    ],
+    "commands": [
+      {
+        "id": "orchestra-board.open",
+        "title": "Orchestra Board: Open board"
+      },
+      {
+        "id": "orchestra-board.refresh",
+        "title": "Orchestra Board: Refresh"
+      }
+    ],
+    "statusBarItems": [
+      {
+        "id": "summary",
+        "text": "Orchestra",
+        "icon": "layers",
+        "tooltip": "Orchestra Board: Backlog · In Progress · Under Review",
+        "command": "orchestra-board.open"
+      }
+    ],
+    "events": [
+      {
+        "on": "agent.status.changed"
+      }
+    ],
+    "settings": [
+      {
+        "key": "teamFolder",
+        "title": "Team folder",
+        "description": "The folder with team.json, agents/, teams/ and tasks/, at the root of the repository the agents work in (for example <repo>/.orca-team). Leave empty to use the folder this plugin sits in.",
+        "type": "string",
+        "default": "",
+        "placeholder": "C:\\path\\to\\repo\\.orca-team"
+      },
+      {
+        "key": "refreshSeconds",
+        "title": "Auto refresh (seconds)",
+        "description": "The board also refreshes when tasks/, agents/ or teams/ change and when an agent's status changes.",
+        "type": "integer",
+        "default": 60,
+        "minimum": 15,
+        "maximum": 3600
+      },
+      {
+        "key": "jevAuto",
+        "title": "Assess cards with Jev automatically",
+        "description": "When a TypeSafe token is saved, ask Jev about each card whose brief or agents changed.",
+        "type": "boolean",
+        "default": true
+      },
+      {
+        "key": "autoReview",
+        "title": "Start a review automatically",
+        "description": "When an agent the board started reports, Jev picks a reviewer (never the implementer) and the board starts it. You still decide Done.",
+        "type": "boolean",
+        "default": true
+      },
+      {
+        "key": "jevModel",
+        "title": "Jev model",
+        "description": "Model name or alias for TypeSafe System One requests.",
+        "type": "string",
+        "default": "jev-latest"
+      }
+    ]
+  },
+  "capabilities": [
+    {
+      "kind": "workspace:read"
+    },
+    {
+      "kind": "workspace:write"
+    },
+    {
+      "kind": "agent:read"
+    },
+    {
+      "kind": "settings:own"
+    },
+    {
+      "kind": "storage:own"
+    },
+    {
+      "kind": "secrets:own"
+    }
+  ]
+}

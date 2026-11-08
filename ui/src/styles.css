@@ -1,0 +1,86 @@
+/* Tailwind scans only src/: .orca-team is git-excluded, and automatic source detection skips ignored files. */
+@import "tailwindcss" source(none);
+@source "./";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* shadcn's tokens follow Orca's theme, so the board matches the app in light and dark. */
+:root {
+  --radius: var(--orca-radius, 0.5rem);
+  --background: var(--orca-background, #0b0b0c);
+  --foreground: var(--orca-foreground, #ececec);
+  --card: var(--orca-card, #151517);
+  --card-foreground: var(--orca-card-foreground, #ececec);
+  --popover: var(--orca-popover, #141416);
+  --popover-foreground: var(--orca-popover-foreground, #ececec);
+  --primary: var(--orca-primary, #ececec);
+  --primary-foreground: var(--orca-primary-foreground, #0b0b0c);
+  --secondary: var(--orca-secondary, #232326);
+  --secondary-foreground: var(--orca-secondary-foreground, #ececec);
+  --muted: var(--orca-muted, #1c1c1f);
+  --muted-foreground: var(--orca-muted-foreground, #8e8e93);
+  --accent: var(--orca-accent, #26262a);
+  --accent-foreground: var(--orca-accent-foreground, #ececec);
+  --destructive: var(--orca-destructive, #e5484d);
+  --border: var(--orca-border, #2a2a2e);
+  --input: var(--orca-input, #2a2a2e);
+  --ring: var(--orca-ring, #5e6ad2);
+  --status-backlog: #8a8f98;
+  --status-progress: #5e6ad2;
+  --status-review: #d9a020;
+  --status-done: #4cb782;
+}
+
+@theme inline {
+  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: ui-monospace, "Cascadia Code", "SF Mono", Consolas, monospace;
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-status-backlog: var(--status-backlog);
+  --color-status-progress: var(--status-progress);
+  --color-status-review: var(--status-review);
+  --color-status-done: var(--status-done);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+  body {
+    @apply bg-background font-sans text-[13px] text-foreground antialiased;
+    overflow: hidden;
+  }
+}
+
+/* Long text in the detail dialog fades out until "Show more". */
+.clamp-fade {
+  max-height: 16rem;
+  overflow: hidden;
+  mask-image: linear-gradient(#000 70%, transparent);
+}
